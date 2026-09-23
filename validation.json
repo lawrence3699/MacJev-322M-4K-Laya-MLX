@@ -1,0 +1,213 @@
+{
+  "status": "passed",
+  "scope": "port fidelity against the FP32 PyTorch/CUDA model on independent calibration and development splits; not a Mac task-success or accuracy benchmark",
+  "reference": {
+    "fixed_24": "PyTorch FP32 on MPS, calibrated probabilities (same checks as the FP32 release)",
+    "calibration_and_development": "PyTorch FP32 on CUDA H100, logits of the released seed-0 checkpoint (update 2000)"
+  },
+  "validation_inputs": {
+    "rows": 9000,
+    "sha256": "9d10aa4edeb906dc5bbbec918cf6da24caaecc0c3aa25d0fa646571e41fea170",
+    "final_test_rows_used": 0,
+    "token_lengths_match_reference_records": true
+  },
+  "pre_registered_gates": {
+    "full_precision_tier": {
+      "fixed_24_max_calibrated_prob_diff": 0.001,
+      "calibration_argmax_changes": 0,
+      "development_accuracy_drop_pp_max": 0.5
+    },
+    "8bit_tier": {
+      "fixed_24_max_calibrated_prob_diff": 0.01,
+      "calibration_argmax_change_rate_max": 0.003,
+      "development_accuracy_drop_pp_max": 0.5
+    }
+  },
+  "variants": {
+    "fp32": {
+      "stored_weights": "float32 (bit-identical to the FP32 release)",
+      "compute": "float32",
+      "size_bytes": 1287653842,
+      "shipped": true,
+      "gate_tier": "full_precision_tier",
+      "fixed_24_checks": {
+        "n": 24,
+        "max_prob_diff_vs_mps_fp32": 2.095656393319434e-05,
+        "top1_agree": 24
+      },
+      "calibration_6000": {
+        "n": 6000,
+        "max_prob_diff_vs_cuda_fp32": 0.0002547005719223949,
+        "p99_prob_diff": 2.8307303014604218e-05,
+        "mean_prob_diff": 2.2415874866087333e-06,
+        "argmax_flips": 0,
+        "stable_rows_margin_ge_0.06": 3300,
+        "stable_flips": 0,
+        "accuracy_reference": 0.5386666666666666,
+        "accuracy_format": 0.5386666666666666,
+        "accuracy_delta_pp": 0.0,
+        "top_prob_ece15_reference": 0.013520113967665719,
+        "top_prob_ece15_format": 0.01349798163554609
+      },
+      "development_3000": {
+        "n": 3000,
+        "max_prob_diff_vs_cuda_fp32": 0.00022290671469138434,
+        "p99_prob_diff": 3.88079528825818e-05,
+        "mean_prob_diff": 2.9117083857685933e-06,
+        "argmax_flips": 0,
+        "stable_rows_margin_ge_0.06": 1664,
+        "stable_flips": 0,
+        "accuracy_reference": 0.5373333333333333,
+        "accuracy_format": 0.5373333333333333,
+        "accuracy_delta_pp": 0.0,
+        "top_prob_ece15_reference": 0.016374556762315976,
+        "top_prob_ece15_format": 0.016374472339815385
+      },
+      "gate_checks": {
+        "fixed_max_prob_diff": true,
+        "cal_flip_rate": true,
+        "dev_acc_drop_pp": true
+      },
+      "gate_status": "passed"
+    },
+    "fp16": {
+      "stored_weights": "float16 (all tensors)",
+      "compute": "float32",
+      "size_bytes": 643835639,
+      "shipped": false,
+      "gate_tier": "full_precision_tier",
+      "fixed_24_checks": {
+        "n": 24,
+        "max_prob_diff_vs_mps_fp32": 0.000384189229458598,
+        "top1_agree": 24
+      },
+      "calibration_6000": {
+        "n": 6000,
+        "max_prob_diff_vs_cuda_fp32": 0.002649422615156216,
+        "p99_prob_diff": 0.0008220726777151053,
+        "mean_prob_diff": 6.821076590491241e-05,
+        "argmax_flips": 3,
+        "stable_rows_margin_ge_0.06": 3300,
+        "stable_flips": 0,
+        "accuracy_reference": 0.5386666666666666,
+        "accuracy_format": 0.5388333333333334,
+        "accuracy_delta_pp": 0.016666666666675933,
+        "top_prob_ece15_reference": 0.013520113967665719,
+        "top_prob_ece15_format": 0.013330155124749742
+      },
+      "development_3000": {
+        "n": 3000,
+        "max_prob_diff_vs_cuda_fp32": 0.003065216214624744,
+        "p99_prob_diff": 0.0010290805528338403,
+        "mean_prob_diff": 8.278838777811445e-05,
+        "argmax_flips": 2,
+        "stable_rows_margin_ge_0.06": 1664,
+        "stable_flips": 0,
+        "accuracy_reference": 0.5373333333333333,
+        "accuracy_format": 0.5373333333333333,
+        "accuracy_delta_pp": 0.0,
+        "top_prob_ece15_reference": 0.016374556762315976,
+        "top_prob_ece15_format": 0.016380400105833116
+      },
+      "gate_checks": {
+        "fixed_max_prob_diff": true,
+        "cal_flip_rate": false,
+        "dev_acc_drop_pp": true
+      },
+      "gate_status": "failed"
+    },
+    "8bit": {
+      "stored_weights": "8-bit affine g64 (encoder embeddings + linear layers, FP32 scales), rest float16",
+      "compute": "float32",
+      "size_bytes": 375312487,
+      "shipped": false,
+      "gate_tier": "8bit_tier",
+      "fixed_24_checks": {
+        "n": 24,
+        "max_prob_diff_vs_mps_fp32": 0.022789137554023287,
+        "top1_agree": 23
+      },
+      "calibration_6000": {
+        "n": 6000,
+        "max_prob_diff_vs_cuda_fp32": 0.17484148501762253,
+        "p99_prob_diff": 0.07046721628170055,
+        "mean_prob_diff": 0.005296089373630688,
+        "argmax_flips": 288,
+        "stable_rows_margin_ge_0.06": 3300,
+        "stable_flips": 14,
+        "accuracy_reference": 0.5386666666666666,
+        "accuracy_format": 0.5366666666666666,
+        "accuracy_delta_pp": -0.20000000000000018,
+        "top_prob_ece15_reference": 0.013520113967665719,
+        "top_prob_ece15_format": 0.013237243617130119
+      },
+      "development_3000": {
+        "n": 3000,
+        "max_prob_diff_vs_cuda_fp32": 0.14835781284344313,
+        "p99_prob_diff": 0.06042736857826318,
+        "mean_prob_diff": 0.005353106105921175,
+        "argmax_flips": 130,
+        "stable_rows_margin_ge_0.06": 1664,
+        "stable_flips": 2,
+        "accuracy_reference": 0.5373333333333333,
+        "accuracy_format": 0.5373333333333333,
+        "accuracy_delta_pp": 0.0,
+        "top_prob_ece15_reference": 0.016374556762315976,
+        "top_prob_ece15_format": 0.0161643330909288
+      },
+      "gate_checks": {
+        "fixed_max_prob_diff": false,
+        "cal_flip_rate": false,
+        "dev_acc_drop_pp": true
+      },
+      "gate_status": "failed"
+    }
+  },
+  "fp32_package_identity": {
+    "note": "The full 9000-row FP32 run used the source FP32 file through the same runtime code; the published package reproduces bit-identical logits on a 317-row subset.",
+    "rows_checked": 317,
+    "bit_identical": true
+  },
+  "rejected_fp16_arithmetic": {
+    "note": "FP16 activations (with FP16 weights) gave a fixed-24 max difference of 0.00387 and 3 top-1 changes in 317 rows; the runtime therefore computes in FP32 only."
+  },
+  "smoke": {
+    "precision": "fp32",
+    "load_seconds_including_sha256": 2.13,
+    "readme_choice_example": {
+      "answer": "open_browser",
+      "probabilities": {
+        "open_browser": 0.9931809306144714,
+        "copy_file": 0.003994806203991175,
+        "ask_user": 0.002824182389304042
+      },
+      "input_tokens": 76
+    },
+    "score_example": {
+      "0": 0.1327856034040451,
+      "1": 0.3525608479976654,
+      "2": 0.5146535634994507
+    },
+    "noul_example": {
+      "false": 0.3189460337162018,
+      "true": 0.6810539960861206
+    },
+    "exact_4096_forward": {
+      "tokens": 4096,
+      "finite": true,
+      "seconds": 1.339
+    },
+    "overflow_rejected": true,
+    "header_overflow_rejected": true,
+    "short_request_latency_ms_median_of_10": 183.0
+  },
+  "pytorch_cross_check_readme_examples_max_prob_diff": 5.4e-07,
+  "environment": {
+    "chip": "Apple M1 Max",
+    "macos": "15.7.5",
+    "python": "3.12.13",
+    "mlx": "0.32.2",
+    "tokenizers": "0.23.2"
+  },
+  "calibration_temperatures_refitted": false
+}

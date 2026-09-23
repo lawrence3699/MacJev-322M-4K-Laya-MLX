@@ -1,0 +1,24 @@
+MacJev-322M-4K-Laya-MLX
+Independent experimental model release maintained by chaoliangUNSW.
+Native MLX conversion of https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya
+(FP32 source weights SHA-256 a1c8cb93485dc32a499cd221dfc9a534dd4e309f5c3ab908ea13d0190a203750).
+
+This work includes portions derived from Laya:
+https://github.com/NandhaKishorM/laya
+Upstream source commit: 573e5b62696ba441230cd6be71d593331b5d23af
+Model: convaiinnovations/laya, multilingual subfolder
+Model revision: 1c5edc17a7acd8701df6fc341c0d179f1c62c982
+Laya is licensed under Apache License 2.0; see LICENSE.
+
+The backbone originates from jhu-clsp/mmBERT-base, licensed under MIT;
+see MMBERT_LICENSE for the upstream notice. The encoder follows the
+ModernBERT architecture as implemented in Hugging Face Transformers.
+
+The MLX runtime is an independent reimplementation of the same computation.
+Its packaging follows the approach of community MLX ports of Laya.
+
+Relative to the FP32 release, only the file container and runtime change:
+the same float32 tensors are saved with MLX and run by a native MLX
+implementation in float32. No retraining, quantization or recalibration.
+JEV is comparison/category context only; no JEV weights are included.
+This project is not affiliated with or endorsed by JEV or the Laya authors.
