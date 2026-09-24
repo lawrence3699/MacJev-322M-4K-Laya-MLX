@@ -20,6 +20,8 @@ tags:
 
 # MacJev-322M-4K-Laya-MLX
 
+**Website:** [jevstyle.com](https://jevstyle.com/#macjev) — all JevStyle decision models, benchmarks and quickstart in one place.
+
 **MacJev running natively on Apple silicon with MLX. No PyTorch, exact FP32 results.**
 
 [MacJev-322M-4K-Laya](https://huggingface.co/chaoliangUNSW/MacJev-322M-4K-Laya) is a compact decision model for local Mac agents. You give it an observed state and one typed question with candidate answers. In a single forward pass it returns a probability for every candidate. Use it to rank candidate actions, route tool calls and check task state.
